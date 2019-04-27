@@ -26,14 +26,20 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    deviceform.cpp \
+    led.cpp
 
 HEADERS += \
         mainwindow.h \
-    globals.h
+    globals.h \
+    deviceform.h \
+    led.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    deviceform.ui \
+    led.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

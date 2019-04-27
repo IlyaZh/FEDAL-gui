@@ -8,4 +8,6 @@ const uint MAJOR_VERSION = 1;
 const uint MINOR_VERSION = 0;
 const uint PATCH_VERSION = 0;
 
+const int maxDevices = 4;
+
 #endif // GLOBALS_H
