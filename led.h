@@ -2,7 +2,7 @@
 #define LED_H
 
 #include <QWidget>
-#include <QMap>
+#include <QMultiMap>
 #include <QDebug>
 #include <iterator>
 
@@ -15,21 +15,21 @@ class Led : public QWidget
     Q_OBJECT
 
 public:
-    explicit Led(QMap<QString, QColor> &m_states, QWidget *parent = nullptr, QString title = "", bool isClickable = false);
+    explicit Led(QMultiMap<QString, QColor> &m_states, QWidget *parent = nullptr, QString title = "", bool isClickable = false);
     ~Led() override;
     void setState(QString);
     QPair<QString, QColor> state();
 
 private:
     Ui::Led *ui;
-    QMap<QString, QColor> m_states;
-    QMap<QString, QColor>::Iterator currentState;
+    QMultiMap<QString, QColor> m_states;
+    QMultiMap<QString, QColor>::Iterator currentState;
     bool isClickable;
     QString title;
 
     void resizeEvent(QResizeEvent *event) override;
     void mouseDoubleClickEvent(QMouseEvent *event) override;
-    void setState(QMap<QString, QColor>::Iterator item);
+    void setState(QMultiMap<QString, QColor>::Iterator item);
 };
 
 #endif // LED_H

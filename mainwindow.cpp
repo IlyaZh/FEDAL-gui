@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     dialLastPosition = 0;
 
     // Init water annd cool indicators
-    QMap<QString, QColor> waterBlockStates;
+    QMultiMap<QString, QColor> waterBlockStates;
     waterBlockStates.insert("OK", QColor(10, 223, 42));
     waterBlockStates.insert("ERR", QColor(255, 60, 26));
     waterLed = new Led(waterBlockStates, this, "Вода", true);

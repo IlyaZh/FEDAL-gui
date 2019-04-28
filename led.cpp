@@ -1,7 +1,7 @@
 #include "led.h"
 #include "ui_led.h"
 
-Led::Led(QMap<QString, QColor> &states, QWidget *parent, QString title, bool isClickable) :
+Led::Led(QMultiMap<QString, QColor> &states, QWidget *parent, QString title, bool isClickable) :
     QWidget(parent),
     ui(new Ui::Led)
 {
@@ -40,7 +40,7 @@ void Led::setState(QString str) {
     }
 }
 
-void Led::setState(QMap<QString, QColor>::Iterator item) {
+void Led::setState(QMultiMap<QString, QColor>::Iterator item) {
     setState(item.key());
 }
 
