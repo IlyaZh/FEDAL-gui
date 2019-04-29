@@ -28,13 +28,17 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     deviceform.cpp \
-    led.cpp
+    led.cpp \
+    device.cpp \
+    abstractdeviceform.cpp
 
 HEADERS += \
         mainwindow.h \
     globals.h \
     deviceform.h \
-    led.h
+    led.h \
+    device.h \
+    abstractdeviceform.h
 
 FORMS += \
         mainwindow.ui \
