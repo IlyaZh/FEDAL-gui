@@ -48,6 +48,7 @@ void MainWindow::showParameters(bool visible) {
             int row = 0;
             foreach(DeviceForm* device, deviceForms) {
                 parametersLayout->addWidget(device, row++, 0);
+                device->setParent(ui->parameterWidget);
                 connect(device, SIGNAL(parameterClicked(DeviceForm*, QPushButton*)), this, SLOT(parameterClicked(DeviceForm*, QPushButton*)));
             }
         } else {
@@ -78,12 +79,6 @@ void MainWindow::setDeviceOn(bool isDeviceOn) {
 }
 
 // private slots
-
-void MainWindow::on_toogleParametersButton_toggled(bool checked)
-{
-    showParameters(checked); // optimize
-}
-
 void MainWindow::on_dial_sliderMoved(int position)
 {
     int delta = position-dialLastPosition;
