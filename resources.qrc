@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/forms">
+        <file>deviceform.ui</file>
+        <file>led.ui</file>
+        <file>mainwindow.ui</file>
+    </qresource>
+</RCC>

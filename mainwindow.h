@@ -9,6 +9,9 @@
 #include <QQueue>
 #include <QPointer>
 #include <QSignalMapper>
+#include <QUiLoader>
+#include <QFile>
+#include <QSpacerItem>
 #include "deviceform.h"
 #include "led.h"
 
@@ -45,11 +48,13 @@ private:
     QPointer<Led> blockLed;
     QVector<DeviceForm*> deviceForms;
     QPushButton *clickedButton;
+    QWidget* parametersFooter;
 
     QMap<QString, QColor> waterBlockStates;
     QMap<QString, QColor>::iterator waterItt, blockItt;
 
     void updateWindow();
+    void initParameters();
 
 };
 

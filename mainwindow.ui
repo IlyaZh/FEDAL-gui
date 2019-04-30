@@ -127,7 +127,9 @@
            <height>105</height>
           </size>
          </property>
-         <layout class="QGridLayout" name="gridLayout_3"/>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
         </widget>
        </item>
        <item row="0" column="8">
@@ -404,7 +406,9 @@ QPushButton:checked {
            <height>105</height>
           </size>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2"/>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
         </widget>
        </item>
        <item row="0" column="0" rowspan="2">
@@ -465,7 +469,7 @@ QPushButton:checked {
     <item row="3" column="0" colspan="3">
      <widget class="QWidget" name="parameterWidget" native="true">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+       <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -482,15 +486,24 @@ QPushButton:checked {
         <height>16777215</height>
        </size>
       </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
      </widget>
     </item>
     <item row="1" column="0" colspan="3">
      <widget class="Line" name="line">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>1382</width>
+        <height>16777215</height>
+       </size>
       </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>

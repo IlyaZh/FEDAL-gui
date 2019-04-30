@@ -16,8 +16,16 @@ MainWindow::MainWindow(QWidget *parent) :
     // Init water annd cool indicators
     waterLed = new Led("OK", QColor(10, 223, 42), this, "Вода", true);
     blockLed = new Led("OK", QColor(10, 223, 42), this, "Блокировка", true);
-    ui->waterWidget->layout()->addWidget(waterLed);
-    ui->blockWidget->layout()->addWidget(blockLed);
+
+    QGridLayout* hbLayout = new QGridLayout(ui->waterWidget);
+    hbLayout->addWidget(waterLed, 0, 0);
+//    hbLayout->addItem(new QSpacerItem(20,20), 0, 1, 0, 0);
+    ui->waterWidget->setLayout(hbLayout);
+
+    hbLayout = new QGridLayout(ui->blockWidget);
+//    hbLayout->addItem(new QSpacerItem(20,20), 0, 0, 0, 0);
+    hbLayout->addWidget(blockLed, 0, 1);
+    ui->blockWidget->setLayout(hbLayout);
 
     deviceForms.clear();
 
@@ -45,28 +53,17 @@ void MainWindow::showParameters(bool visible) {
     if(visible) {
         ui->toogleParametersButton->setText("Скрыть параметры");
         if(ui->parameterWidget->layout() == nullptr) {
-            QGridLayout* parametersLayout = new QGridLayout(ui->parameterWidget);
-            parametersLayout->setMargin(0);
-            int row = 0;
-            foreach(DeviceForm* device, deviceForms) {
-                parametersLayout->addWidget(device, row++, 0);
-                device->setParent(ui->parameterWidget);
-                connect(device, SIGNAL(parameterClicked(DeviceForm*, QPushButton*)), this, SLOT(parameterClicked(DeviceForm*, QPushButton*)));
-            }
-        } else {
-            foreach(DeviceForm* device, deviceForms) {
-                device->setVisible(true);
-            }
+            initParameters();
         }
     } else {
         ui->toogleParametersButton->setText("Показать параметры");
-        QLayout* parametersLayout = ui->parameterWidget->layout();
-        if(parametersLayout) {
-            foreach(DeviceForm* device, deviceForms) {
-                device->setVisible(false);
-            }
-        }
-    };
+    }
+
+    foreach(DeviceForm* device, deviceForms) {
+        device->setVisible(visible);
+    }
+    parametersFooter->setVisible(visible);
+
     updateWindow();
 }
 
@@ -175,4 +172,60 @@ void MainWindow::updateWindow() {
     ui->parameterWidget->adjustSize();
     ui->centralWidget->adjustSize();
     this->adjustSize();
+}
+
+void MainWindow::initParameters() {
+    QGridLayout* parametersLayout = new QGridLayout(ui->parameterWidget);
+    int row = 0;
+    foreach(DeviceForm* device, deviceForms) {
+        parametersLayout->addWidget(device, row++, 0);
+        device->setParent(ui->parameterWidget);
+        connect(device, SIGNAL(parameterClicked(DeviceForm*, QPushButton*)), this, SLOT(parameterClicked(DeviceForm*, QPushButton*)));
+//                QSize size = ui->parameterWidget->size();
+//                ui->parameterWidget->resize(size.width(), size.height()+device->size().height());
+    }
+
+    // load footer
+    QUiLoader loader;
+    QFile file(":/forms/deviceform.ui");
+    file.open(QFile::ReadOnly);
+    parametersFooter = loader.load(&file, this);
+    file.close();
+
+    QList<QString> labels = {"Частота, Гц", "Ток, А", "Длительн., мкс", "Напряжение, В","Задержка, мкс"};
+    int i = 0;
+    QFont font;
+    foreach(auto* button, parametersFooter->findChildren<QPushButton*>()) {
+        button->setStyleSheet("");
+        button->setCheckable(false);
+        font = button->font();
+        font.setPointSize(14);
+        button->setFont(font);
+        button->setText(labels[i++]);
+    }
+    QWidget* linkWidget = parametersFooter->findChild<QWidget*>("linkWidget");
+    QWidget* stateWidget = parametersFooter->findChild<QWidget*>("stateWidget");
+
+    QGridLayout *glayout = new QGridLayout(linkWidget);
+    QLabel* label = new QLabel("Связь", linkWidget);
+    label->setFont(font);
+    glayout->addWidget(label);
+    linkWidget->setLayout(glayout);
+    linkWidget->setMinimumWidth(80);
+
+    glayout = new QGridLayout(stateWidget);
+    label = new QLabel("Сеть", stateWidget);
+    label->setFont(font);
+    label->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    label->setAlignment(Qt::AlignHCenter);
+    glayout->addWidget(label);
+    stateWidget->setLayout(glayout);
+    stateWidget->setMinimumWidth(80);
+
+    parametersLayout->addWidget(parametersFooter, row++, 0);
+
+    // end of loading footer
+
+
+    ui->parameterWidget->setLayout(parametersLayout);
 }
