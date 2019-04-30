@@ -30,7 +30,8 @@ SOURCES += \
     deviceform.cpp \
     led.cpp \
     device.cpp \
-    abstractdeviceform.cpp
+    abstractdeviceform.cpp \
+    appsettings.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -38,7 +39,9 @@ HEADERS += \
     deviceform.h \
     led.h \
     device.h \
-    abstractdeviceform.h
+    abstractdeviceform.h \
+    abstractdata.h \
+    appsettings.h
 
 FORMS += \
         mainwindow.ui \
@@ -52,3 +55,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resources.qrc
+
+DISTFILES += \
+    uml-model.qmodel
