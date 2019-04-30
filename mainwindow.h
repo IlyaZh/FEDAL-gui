@@ -49,6 +49,8 @@ private:
     QMap<QString, QColor> waterBlockStates;
     QMap<QString, QColor>::iterator waterItt, blockItt;
 
+    void updateWindow();
+
 };
 
 #endif // MAINWINDOW_H

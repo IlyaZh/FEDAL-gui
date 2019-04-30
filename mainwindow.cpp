@@ -43,8 +43,10 @@ void MainWindow::addDeviceForm(DeviceForm* deviceForm) {
 // public slots
 void MainWindow::showParameters(bool visible) {
     if(visible) {
+        ui->toogleParametersButton->setText("Скрыть параметры");
         if(ui->parameterWidget->layout() == nullptr) {
             QGridLayout* parametersLayout = new QGridLayout(ui->parameterWidget);
+            parametersLayout->setMargin(0);
             int row = 0;
             foreach(DeviceForm* device, deviceForms) {
                 parametersLayout->addWidget(device, row++, 0);
@@ -57,6 +59,7 @@ void MainWindow::showParameters(bool visible) {
             }
         }
     } else {
+        ui->toogleParametersButton->setText("Показать параметры");
         QLayout* parametersLayout = ui->parameterWidget->layout();
         if(parametersLayout) {
             foreach(DeviceForm* device, deviceForms) {
@@ -64,9 +67,7 @@ void MainWindow::showParameters(bool visible) {
             }
         }
     };
-    ui->parameterWidget->adjustSize();
-    ui->centralWidget->adjustSize();
-    this->adjustSize();
+    updateWindow();
 }
 
 void MainWindow::setDeviceOn(bool isDeviceOn) {
@@ -166,4 +167,12 @@ void MainWindow::blockClickedSlot() {
     }
     blockLed->setText(blockItt.key());
     blockLed->setColor(blockItt.value());
+}
+
+// private
+
+void MainWindow::updateWindow() {
+    ui->parameterWidget->adjustSize();
+    ui->centralWidget->adjustSize();
+    this->adjustSize();
 }
