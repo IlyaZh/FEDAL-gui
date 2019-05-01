@@ -1,12 +1,19 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(AppSettings* settingsPtr, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     clickedButton(nullptr)
 {
     ui->setupUi(this);
+
+    m_settings = settingsPtr;
+
+    if(m_settings) {
+        this->resize(m_settings->getWindowSize());
+        this->move(m_settings->getWindowPos());
+    }
 
     QString windowTitle = QString("%1 (v.%2.%3.%4)").arg(SOFTWARE_TITLE).arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(PATCH_VERSION);
     setWindowTitle(windowTitle);
@@ -57,11 +64,27 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    if(m_settings) {
+        m_settings->saveWindowPos(this->pos());
+        m_settings->saveWindowSize(this->size());
+    }
     delete ui;
 }
 
 void MainWindow::addDeviceForm(DeviceForm* deviceForm) {
     deviceForms.push_back(deviceForm);
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event) {
+    if(m_settings) {
+        m_settings->saveWindowSize(event->size());
+    }
+}
+
+void MainWindow::moveEvent(QMoveEvent *event) {
+    if(m_settings) {
+        m_settings->saveWindowPos(event->pos());
+    }
 }
 
 // public slots
@@ -91,7 +114,6 @@ void MainWindow::setDeviceOn(bool isDeviceOn) {
         ui->onOffButton->setText("Выключен");
     }
 }
-
 // private slots
 void MainWindow::on_dial_sliderMoved(int position)
 {

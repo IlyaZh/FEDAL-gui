@@ -3,6 +3,8 @@
 
 #include <QString>
 
+const QString ORG_NAME = "FEDAL";
+const QString APP_NAME = "Gui-exp";
 const QString SOFTWARE_TITLE = "FEDAL GUI";
 const uint MAJOR_VERSION = 1;
 const uint MINOR_VERSION = 0;
