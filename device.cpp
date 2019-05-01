@@ -10,7 +10,7 @@ Device::Device(int devId, QObject *parent) : QObject(parent),
 }
 
 Device::~Device() {
-
+    qDebug() << "dev delete";
 }
 
 void Device::setDataSource(AbstractData& dataSource) {
