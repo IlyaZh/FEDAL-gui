@@ -3,5 +3,6 @@
         <file>deviceform.ui</file>
         <file>led.ui</file>
         <file>mainwindow.ui</file>
+        <file alias="FEDAL.png">FEDAL.ico</file>
     </qresource>
 </RCC>

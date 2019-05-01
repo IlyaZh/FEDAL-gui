@@ -37,6 +37,22 @@ MainWindow::MainWindow(QWidget *parent) :
     waterBlockStates["ERR"] = Led::RED;
     waterItt = waterBlockStates.begin();
     blockItt = waterBlockStates.begin();
+
+    // font fix
+    QFont font;
+    foreach(QPushButton* button, this->findChildren<QPushButton*>()) {
+        font = button->font();
+        font.setPixelSize(18);
+        button->setFont(font);
+    }
+
+    font = ui->unitLabel->font();
+    font.setPixelSize(96);
+    ui->unitLabel->setFont(font);
+
+    font = ui->frequencyButton->font();
+    font.setPixelSize(170);
+    ui->frequencyButton->setFont(font);
 }
 
 MainWindow::~MainWindow()
@@ -89,7 +105,15 @@ void MainWindow::on_dial_sliderMoved(int position)
         bool isOk = false;
 
         QString fieldName = clickedButton->objectName();
-        if(fieldName == "frequencyButton" || fieldName == "currentButton" || fieldName == "voltageButton") {
+        if (fieldName == "durationButton" || fieldName == "delayButton") {
+                    int value = clickedButton->text().toInt(&isOk);
+                    if(!isOk) {
+                       value = 0;
+                    }
+                    value += delta;
+                    if(value < 0) value = 0;
+                    clickedButton->setText(QString::number(value));
+        } else {
             double value = clickedButton->text().toDouble(&isOk);
             if(!isOk) {
                value = 0;
@@ -97,26 +121,20 @@ void MainWindow::on_dial_sliderMoved(int position)
             value += static_cast<double>(delta)/10;
             if(value < 0) value = 0;
             clickedButton->setText(QString::number(value, 'f', 1));
-        } else if (fieldName == "durationButton" || fieldName == "delayButton") {
-            int value = clickedButton->text().toInt(&isOk);
-            if(!isOk) {
-               value = 0;
-            }
-            value += delta;
-            if(value < 0) value = 0;
-            clickedButton->setText(QString::number(value));
         }
 
     }
 }
 
 void MainWindow::parameterClicked(DeviceForm* device, QPushButton* button) {
-    ui->dial->setValue(0);
     dialLastPosition = ui->dial->value();
     ui->dial->setEnabled(button->isChecked());
 
     if(button->isChecked()) {
         clickedButton = button;
+        if(device != nullptr) {
+            ui->frequencyButton->setChecked(false);
+        }
         foreach(DeviceForm* devPtr, deviceForms) {
             if(devPtr != device) devPtr->inactivateFields();
         }
@@ -192,14 +210,15 @@ void MainWindow::initParameters() {
     parametersFooter = loader.load(&file, this);
     file.close();
 
-    QList<QString> labels = {"Частота, Гц", "Ток, А", "Длительн., мкс", "Напряжение, В","Задержка, мкс"};
+    QList<QString> labels = {"Частота, Гц", "Ток, А", "Длит"
+                             "., мкс", "Напряж., В","Задержка, мкс"};
     int i = 0;
     QFont font;
     foreach(auto* button, parametersFooter->findChildren<QPushButton*>()) {
         button->setStyleSheet("");
         button->setCheckable(false);
         font = button->font();
-        font.setPointSize(14);
+        font.setPixelSize(19);
         button->setFont(font);
         button->setText(labels[i++]);
     }
@@ -226,6 +245,10 @@ void MainWindow::initParameters() {
 
     // end of loading footer
 
-
     ui->parameterWidget->setLayout(parametersLayout);
+}
+
+void MainWindow::on_frequencyButton_clicked()
+{
+    parameterClicked(nullptr, ui->frequencyButton);
 }

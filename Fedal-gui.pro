@@ -58,3 +58,5 @@ RESOURCES += \
 
 DISTFILES += \
     uml-model.qmodel
+
+RC_ICONS = FEDAL.ico

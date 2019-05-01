@@ -28,6 +28,12 @@ DeviceForm::DeviceForm(int deviceNumber, QWidget *parent) :
     parameterButtons.push_back(ui->voltageButton);
     parameterButtons.push_back(ui->delayButton);
 
+    foreach(QPushButton* button, parameterButtons) {
+        QFont font = button->font();
+        font.setPixelSize(48);
+        button->setFont(font);
+    }
+
     linkStates.insert(QString::number(m_deviceNumber), Led::WHITE);
     linkStates.insert(QString::number(m_deviceNumber), Led::GREEN);
     linkItt = linkStates.begin();

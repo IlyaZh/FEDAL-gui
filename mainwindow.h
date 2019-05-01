@@ -41,6 +41,8 @@ private slots:
     void waterClickedSlot();
     void blockClickedSlot();
 
+    void on_frequencyButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     int dialLastPosition;

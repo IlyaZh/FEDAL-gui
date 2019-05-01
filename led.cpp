@@ -27,6 +27,14 @@ Led::Led(QString stateText, QColor color,  QWidget *parent, QString title, bool 
         ui->titleLabel->setText(title);
     }
 
+    QFont font = ui->titleLabel->font();
+    font.setPixelSize(20);
+    ui->titleLabel->setFont(font);
+
+    font = ui->stateButton->font();
+    font.setPixelSize(20);
+    ui->stateButton->setFont(font);
+
     if(isClickable) ui->circleWidget->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
 
     this->setMinimumSize(this->sizeHint());
