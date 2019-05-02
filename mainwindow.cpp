@@ -26,12 +26,10 @@ MainWindow::MainWindow(AppSettings* settingsPtr, QWidget *parent) :
 
     QGridLayout* hbLayout = new QGridLayout(ui->waterWidget);
     hbLayout->addWidget(waterLed, 0, 0);
-//    hbLayout->addItem(new QSpacerItem(20,20), 0, 1, 0, 0);
     ui->waterWidget->setLayout(hbLayout);
 
     hbLayout = new QGridLayout(ui->blockWidget);
-//    hbLayout->addItem(new QSpacerItem(20,20), 0, 0, 0, 0);
-    hbLayout->addWidget(blockLed, 0, 1);
+    hbLayout->addWidget(blockLed, 0, 0);
     ui->blockWidget->setLayout(hbLayout);
 
     deviceForms.clear();
@@ -232,9 +230,13 @@ void MainWindow::initParameters() {
     parametersFooter = loader.load(&file, this);
     file.close();
 
-    QList<QString> labels = {"Частота, Гц", "Ток, А", "Длит"
-                             "., мкс", "Напряж., В","Задержка, мкс"};
-    int i = 0;
+    QMap<QString, QString> labels;
+    labels["frequencyButton"] = "Частота, Гц";
+    labels["currentButton"] = "Ток, А";
+    labels["durationButton"] = "Длит., мкс";
+    labels["voltageButton"] = "Напряж., В";
+    labels["delayButton"] = "Задержка, мкс";
+
     QFont font;
     foreach(auto* button, parametersFooter->findChildren<QPushButton*>()) {
         button->setStyleSheet("");
@@ -242,7 +244,7 @@ void MainWindow::initParameters() {
         font = button->font();
         font.setPixelSize(19);
         button->setFont(font);
-        button->setText(labels[i++]);
+        button->setText(labels.value(button->objectName(),"NOTEXT"));
     }
     QWidget* linkWidget = parametersFooter->findChild<QWidget*>("linkWidget");
     QWidget* stateWidget = parametersFooter->findChild<QWidget*>("stateWidget");
