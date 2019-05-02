@@ -6,9 +6,7 @@
 const QString ORG_NAME = "FEDAL";
 const QString APP_NAME = "Gui-exp";
 const QString SOFTWARE_TITLE = "FEDAL GUI";
-const uint MAJOR_VERSION = 1;
-const uint MINOR_VERSION = 0;
-const uint PATCH_VERSION = 0;
+const QString APP_VERSION = QString("%1.%2.%3").arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_PATCH);
 
 const int MAX_DEVICES = 4;
 
