@@ -4,6 +4,7 @@
 #include "deviceform.h"
 #include "appsettings.h"
 #include "device.h"
+#include "devicefactory.h"
 
 int main(int argc, char *argv[])
 {
@@ -16,13 +17,11 @@ int main(int argc, char *argv[])
     MainWindow w(&settings);
     w.show();
 
-    QList<Device*> devices;
-
-    for(int i = 0 ; i < MAX_DEVICES; ++i) {
-        Device* device = new Device(i+1);
-        devices.append(device);
-        w.addDeviceForm(device->deviceForm());
+    DeviceFactory devFactory;
+    for(int i = 0; i < MAX_DEVICES; i++) {
+        w.addDeviceForm(devFactory.createDevice()->deviceForm());
     }
+
     w.showParameters(true);
 
     return a.exec();

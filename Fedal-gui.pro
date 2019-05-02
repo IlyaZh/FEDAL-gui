@@ -31,7 +31,8 @@ SOURCES += \
     led.cpp \
     device.cpp \
     abstractdeviceform.cpp \
-    appsettings.cpp
+    appsettings.cpp \
+    devicefactory.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -41,7 +42,8 @@ HEADERS += \
     device.h \
     abstractdeviceform.h \
     abstractdata.h \
-    appsettings.h
+    appsettings.h \
+    devicefactory.h
 
 FORMS += \
         mainwindow.ui \
