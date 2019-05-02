@@ -15,7 +15,7 @@ MainWindow::MainWindow(AppSettings* settingsPtr, QWidget *parent) :
         this->move(m_settings->getWindowPos());
     }
 
-    QString windowTitle = QString("%1 (v.%2.%3.%4)").arg(SOFTWARE_TITLE).arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(PATCH_VERSION);
+    QString windowTitle = QString("%1 (ver %2)").arg(SOFTWARE_TITLE).arg(APP_VERSION);
     setWindowTitle(windowTitle);
 
     dialLastPosition = 0;
