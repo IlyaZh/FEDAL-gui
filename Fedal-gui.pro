@@ -70,7 +70,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     resources.qrc
 
-DISTFILES += \
-    uml-model.qmodel
 
 RC_ICONS = FEDAL.ico
